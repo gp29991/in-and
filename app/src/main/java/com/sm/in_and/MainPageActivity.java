@@ -55,6 +55,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         OptionsHelper.clearOptions(this);
         OptionsHelper.clearSortOptions(this);
+        OptionsHelper.clearChartOptions(this);
     }
 
     @Override
@@ -158,6 +159,12 @@ public class MainPageActivity extends AppCompatActivity {
     public void goToCategoryList(View v){
         Intent i = new Intent(this, CategoryListActivity.class);
         i.putExtra("returnview", "main");
+        startActivity(i);
+        finish();
+    }
+
+    public void goToBarChartView(View v){
+        Intent i = new Intent(this, BarChartViewActivity.class);
         startActivity(i);
         finish();
     }

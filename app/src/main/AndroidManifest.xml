@@ -13,6 +13,12 @@
         android:theme="@style/Theme.AppCompat.Light"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PieChartViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BarChartViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddEditCategoryActivity"
             android:exported="false" />
         <activity

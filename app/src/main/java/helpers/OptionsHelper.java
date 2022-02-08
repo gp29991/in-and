@@ -3,6 +3,7 @@ package helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.sm.in_and.ChartOptions;
 import com.sm.in_and.Options;
 import com.sm.in_and.SortOptions;
 
@@ -19,6 +20,8 @@ public class OptionsHelper {
     public static List<String> viewTypeValues = Arrays.asList("det", "cat");
 
     public static List<String> periodsText = Arrays.asList("Ostatnie 30 dni", "Ostatnie 60 dni", "Ostatnie 90 dni", "Najbliższe 30 dni", "Inny okres", "Wszystko");
+
+    public static List<String> chartTypeValues = Arrays.asList("bartotals", "pieinc", "pieexp");
 
     public static LocalDate parseDate(String dateToParse){
         try{
@@ -131,5 +134,69 @@ public class OptionsHelper {
         SharedPreferences.Editor setSortOptionsEdit = setSortOptions.edit();
         setSortOptionsEdit.clear();
         setSortOptionsEdit.commit();
+    }
+
+    public static ChartOptions verifyChartOptions (ChartOptions chartOptions){
+
+        if(!periods.contains(chartOptions.getPeriod())){
+            chartOptions.setPeriod("-30");
+        }
+
+        Integer period = parseInt(chartOptions.getPeriod());
+        if(period != null){
+            if(period > 0){
+                if(!chartOptions.getStartDate().equals(LocalDate.now()) || !chartOptions.getEndDate().equals(LocalDate.now().plus(period, ChronoUnit.DAYS))){
+                    chartOptions.setStartDate(LocalDate.now());
+                    chartOptions.setEndDate(LocalDate.now().plus(period, ChronoUnit.DAYS));
+                }
+            }else{
+                if(!chartOptions.getStartDate().equals(LocalDate.now().plus(period,ChronoUnit.DAYS)) || !chartOptions.getEndDate().equals(LocalDate.now())){
+                    chartOptions.setStartDate(LocalDate.now().plus(period, ChronoUnit.DAYS));
+                    chartOptions.setEndDate(LocalDate.now());
+                }
+            }
+        }else{
+            if(chartOptions.getStartDate() == null || chartOptions.getEndDate() == null){
+                chartOptions.setStartDate(LocalDate.now().plus(-30, ChronoUnit.DAYS));
+                chartOptions.setEndDate(LocalDate.now());
+            }else{
+                if(chartOptions.getStartDate().isAfter(chartOptions.getEndDate())){
+                    chartOptions.setStartDate(chartOptions.getEndDate());
+                }
+            }
+        }
+
+        if(!chartTypeValues.contains(chartOptions.getChartType())){
+            chartOptions.setChartType("bartotals");
+        }
+
+        return chartOptions;
+    }
+
+    public static ChartOptions getChartOptions(Context context){
+        ChartOptions chartOptions = new ChartOptions();
+        SharedPreferences setChartOptions = context.getSharedPreferences("ChartOptions",context.MODE_PRIVATE);
+        chartOptions.setPeriod(setChartOptions.getString("period", "-30"));
+        chartOptions.setStartDate(parseDate(setChartOptions.getString("startdate", String.format("%tF", LocalDate.now().minus(30, ChronoUnit.DAYS)))));
+        chartOptions.setEndDate(parseDate(setChartOptions.getString("enddate", String.format("%tF", LocalDate.now()))));
+        chartOptions.setChartType(setChartOptions.getString("charttype", "bartotals"));
+        return verifyChartOptions(chartOptions);
+    }
+
+    public static void setChartOptions(Context context, String period, String startDate, String endDate, String chartType){
+        SharedPreferences setChartOptions = context.getSharedPreferences("ChartOptions",context.MODE_PRIVATE);
+        SharedPreferences.Editor setChartOptionsEdit = setChartOptions.edit();
+        setChartOptionsEdit.putString("period", period);
+        setChartOptionsEdit.putString("startdate", startDate);
+        setChartOptionsEdit.putString("enddate", endDate);
+        setChartOptionsEdit.putString("charttype", chartType);
+        setChartOptionsEdit.commit();
+    }
+
+    public static void clearChartOptions(Context context){
+        SharedPreferences setChartOptions = context.getSharedPreferences("ChartOptions",context.MODE_PRIVATE);
+        SharedPreferences.Editor setChartOptionsEdit = setChartOptions.edit();
+        setChartOptionsEdit.clear();
+        setChartOptionsEdit.commit();
     }
 }

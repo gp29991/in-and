@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Rodzaj wykresu:"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rgChartType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:checkedButton="@id/rbBartotals"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+        <RadioButton
+            android:id="@+id/rbBartotals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="Przychody i wydatki" />
+
+        <RadioButton
+            android:id="@+id/rbPieinc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="Przychody wg kategorii" />
+
+        <RadioButton
+            android:id="@+id/rbPieexp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="Wydatki wg kategorii" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Okres:"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgChartType" />
+
+    <Spinner
+        android:id="@+id/spPeriod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@+id/rgChartType"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/tvStartDateDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Data początkowa:"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/spPeriod"
+        app:layout_constraintTop_toBottomOf="@+id/spPeriod"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvEndDateDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Data końcowa:"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/tvStartDateDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartDateDescription"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="11-11-1111"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/tvStartDateDescription"
+        app:layout_constraintTop_toBottomOf="@+id/spPeriod"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="11-11-1111"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/tvStartDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvStartDate"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/ibStartDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:contentDescription="Wybór daty początkowej"
+        android:minHeight="48dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/tvStartDate"
+        app:layout_constraintTop_toBottomOf="@+id/spPeriod"
+        app:srcCompat="@drawable/ic_baseline_edit_calendar_24"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/ibEndDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Wybór daty końcowej"
+        android:minHeight="48dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/tvEndDate"
+        app:layout_constraintTop_toBottomOf="@+id/ibStartDatePicker"
+        app:srcCompat="@drawable/ic_baseline_edit_calendar_24"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>
